@@ -104,3 +104,31 @@ export const resetPassword = (req, res) => {
         .catch(err => console.log(err ))
     })
 }
+
+export const changePassword = async(req, res) => {
+    const token = req.params.token
+    const {newPassword, email} = req.body
+    const saltRounds = 10;
+    let resetUser
+    User.findOne({resetToken: token, email, resetTokenExpiration:{$gt: Date.now()}}).then(user => {
+        if (!user){
+            res.status(400).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+        resetUser = user
+        return bcrypt.hash(newPassword, saltRounds);
+    }).then(newHashedpassword =>{
+        resetUser.password = newHashedpassword
+        resetUser.resetToken = null
+        resetUser.resetTokenExpiration = null
+        res.status(200).json({
+            success: true,
+            message: "You have successfully reset your password",
+        });
+        return resetUser.save();
+    })
+    .catch(err=> console.log(err))
+
+}
