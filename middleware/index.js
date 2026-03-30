@@ -29,8 +29,7 @@ export const protect = async (req, res, next) => {
         });
       }
   
-      req.user = user; // 🔥 now available in controllers
-      console.log(req.user)
+      req.user = user; 
   
       next(); // continue to route
   
@@ -44,7 +43,7 @@ export const protect = async (req, res, next) => {
   export const adminOnly = (req, res, next) => {
     if (req.user.role !== "admin") {
       return res.status(403).json({
-        message: "Access denied"
+        message: "Access denied, You are not the Admin"
       });
     }
     next();

@@ -1,60 +1,39 @@
 import User from "../model/User.model.js";
-import bcrypt from 'bcrypt'
+import asyncHandler from '../middleware/asyncHandler.js';
+import AppError from "../utils/appError.js";
+import mongoose from "mongoose";
 
-export const createUser = async (req, res) => {
-    const { name, email, password, role } = req.body;
-    
-    if (!name || !email || !password || !role) {
-        return res.status(400).json({ message: "All fields are required" });
-    }
-    if (await User.findOne({ email })) {
-        return res.status(400).json({ message: "User already exists" })
-    }
-    // Hash password with bcrypt
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    
-    // Create new user with hashed password
-    const user = await User.create({ name, email, password: hashedPassword, role });
-    res.status(201).json({
-        success: true,
-        message: "User created successfully",
-        data: user
-    });
-};  
+export const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find();
+
+  res.status(200).json({
+    success: true,
+    message: "Users fetched successfully",
+    data: users
+  });
+});
 
 
-export const getAllUsers = async (req, res) => {
-    try{
-        const users = await User.find();
-        res.status(200).json({
-            success: true,
-            message: "Users fetched successfully",
-            data: users
-        });
-    }
-    catch(error){
-        res.status(500).json({ message: error.message });
-    }
-};
-
-
-export const getUser = async (req, res) => {
+export const getUser = asyncHandler(async (req, res) => {
     const { id } = req.params;
     if (!id) {
-        return res.status(400).json({ message: "User ID is required" });
+        throw new AppError('Id not found', 404);
     }
-    try{
-        const user = await User.findById(id);
-        res.status(200).json({
-            success: true,
-            message: "User fetched successfully",
-            data: user
-        });
+    // ✅ validate ID first
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new AppError('Invalid user ID', 400);
+  }
+    
+    const user = await User.findById(id);
+    if (!user) {
+        throw new AppError('User not found', 404);
     }
-    catch(error){
-        res.status(500).json({ message: error.message });
-    }
+    res.status(200).json({
+        success: true,
+        message: "User fetched successfully",
+        data: user
+    });
    
-};
+   
+});
 

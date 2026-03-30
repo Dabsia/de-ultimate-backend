@@ -1,44 +1,48 @@
+import asyncHandler from "../middleware/asyncHandler.js";
 import Product from "../model/Product.model.js";
 import {validationResult} from 'express-validator'
+import AppError from '../utils/AppError.js'
 
-export const getProducts = async (req, res) => {
-    try {
-        const products = await Product.find();
-        res.status(200).json({
-            success: true,
-            message: "Products fetched successfully",
-            data: products
-        });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+export const getProducts = asyncHandler(async (req, res) => {
+   
+    const products = await Product.find();
+    res.status(200).json({
+        success: true,
+        message: "Products fetched successfully",
+        data: products
+    });
+   
+});
 
-export const createProduct = async (req, res) => {
+export const createProduct = asyncHandler(async (req, res) => {
+    // express-validator errors
     const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
-    const { name, price, description, image, category } = req.body; // destructuring the request body
+    if (!errors.isEmpty()) {
+      throw new AppError(errors.array()[0].msg, 400);
+    }
+  
+    const { name, price, description, image, category } = req.body;
+  
+    // manual validation (optional if using express-validator properly)
     if (!name || !price || !description || !image || !category) {
-        return res.status(400).json({ message: "All fields are required" });
-    }       
-
-    if (await Product.findOne({ name })) {
-        return res.status(400).json({ message: "Product with this name already exists" });
+      throw new AppError('All fields are required', 400);
     }
-
-    try {
-        const product = await Product.create(req.body);
-        res.status(201).json({
-            success: true,
-            message: "Product created successfully",
-            data: product
-        });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+  
+    // check duplicate
+    const existingProduct = await Product.findOne({ name });
+    if (existingProduct) {
+      throw new AppError('Product with this name already exists', 400);
     }
-};
+  
+    // create product
+    const product = await Product.create(req.body);
+  
+    res.status(201).json({
+      success: true,
+      message: "Product created successfully",
+      data: product
+    });
+  });
 
 
 export const getProductById = async (req, res) => {
