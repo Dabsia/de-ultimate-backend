@@ -23,11 +23,24 @@ const productSchema = new mongoose.Schema({
           required: true,
         },
       },
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
+    brand: {
+      type: String
+    },
+    size: {
+      type: String
+    },
+    descriptionEnglish: {
+      type: String,
+      required: true
+    },
+    descriptionEsti: {
+      type: String,
+      required: true
+    },
+    instock: {
+      type: Boolean,
+      default: true
+    },
     category: {
         type: String,
         required: true
