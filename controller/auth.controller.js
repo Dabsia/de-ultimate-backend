@@ -142,3 +142,36 @@ export const changePassword = async(req, res) => {
     .catch(err=> console.log(err))
 
 }
+
+// controllers/authController.js
+export const updatePassword = async (req, res) => {
+    try {
+        const { currentPassword, newPassword } = req.body;
+        const userId = req.user.id; // From auth middleware
+    
+        
+        const user = await User.findById(userId);
+        
+        // Check if user exists
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+    
+        // Verify current password
+        const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+        if (!isPasswordValid) {
+          return res.status(401).json({ message: 'Current password is incorrect' });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(newPassword, salt);
+
+        await user.save();
+    
+        res.status(200).json({ message: 'Password changed successfully' });
+        
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+      }
+  };
