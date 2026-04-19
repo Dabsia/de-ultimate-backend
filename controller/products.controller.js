@@ -6,10 +6,10 @@ import fs from "fs";
 export const createProduct = async (req, res) => {
     // console.log(req.user)
   try {
-    const { name, description, price, category, brand, size, descriptionEnglish, descriptionEsti, instock } = req.body;
+    const { name, price, category, brand, size, descriptionEnglish, descriptionEsti, instock } = req.body;
     
     // Validate required fields
-    if (!name || !description || !price || !category || !descriptionEnglish || !descriptionEsti || !instock) {
+    if (!name || !price || !category || !descriptionEnglish || !descriptionEsti || !instock) {
       // Clean up uploaded file if validation fails
       if (req.file && fs.existsSync(req.file.path)) {
         fs.unlinkSync(req.file.path);
@@ -17,7 +17,7 @@ export const createProduct = async (req, res) => {
       
       return res.status(400).json({
         success: false,
-        message: "Name, description, price, category, descriptionEnglish, descriptionEsti, instock are required",
+        message: "Name, price, category, descriptionEnglish, descriptionEsti, instock are required",
       });
     }
     
@@ -35,7 +35,6 @@ export const createProduct = async (req, res) => {
     // Create product in database
     const product = await Product.create({
       name,
-      description,
       price: Number(price),
       category,
       image: uploadedImage,
@@ -119,7 +118,7 @@ export const getProductById = async (req, res) => {
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, price, category, instock, brand, size, descriptionEnglish, descriptionEsti} = req.body;
+    const { name, price, category, instock, brand, size, descriptionEnglish, descriptionEsti} = req.body;
     
     // Find existing product
     const product = await Product.findById(id);
@@ -165,7 +164,6 @@ export const updateProduct = async (req, res) => {
       id,
       {
         name: name || product.name,
-        description: description || product.description,
         price: price !== undefined ? Number(price) : product.price,
         category: category || product.category,
         instock: instock || product.instock,

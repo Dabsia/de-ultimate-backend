@@ -43,6 +43,7 @@ import authRoutes from './routes/auth.routes.js'
 import categoriesRoutes from './routes/categories.routes.js'
 import emailRoutes from './routes/email.routes.js'
 import paymentsRoutes from './routes/payments.routes.js'
+import checkoutRoutes from './routes/checkout.routes.js'
 // import montonioRoutes from './routes/montonio.routes.js'
 
 console.log("MONGO_URI:", process.env.MONGODB_CONNECTION_STRING);
@@ -64,6 +65,7 @@ app.use("/api/v1/users", userRoutes);
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/category', categoriesRoutes)
 app.use('/api/v1/email', emailRoutes)
+app.use('/api/v1/checkout', checkoutRoutes)
 app.use('/api/v1/payments', paymentsRoutes)
 // app.use('/api/v1/montonio', montonioRoutes)
 
