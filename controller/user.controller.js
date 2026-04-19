@@ -1,6 +1,6 @@
 import User from "../model/User.model.js";
 import asyncHandler from '../middleware/asyncHandler.js';
-import AppError from "../utils/appError.js";
+import AppError from "../utils/AppError.js";
 import mongoose from "mongoose";
 
 export const getAllUsers = asyncHandler(async (req, res) => {

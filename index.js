@@ -45,6 +45,8 @@ import emailRoutes from './routes/email.routes.js'
 import paymentsRoutes from './routes/payments.routes.js'
 // import montonioRoutes from './routes/montonio.routes.js'
 
+console.log("MONGO_URI:", process.env.MONGODB_CONNECTION_STRING);
+
 // CORS configuration
 app.use(cors({
     origin: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174'], // Add your frontend URLs
