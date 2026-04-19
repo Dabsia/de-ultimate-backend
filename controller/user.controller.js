@@ -32,8 +32,5 @@ export const getUser = asyncHandler(async (req, res) => {
         success: true,
         message: "User fetched successfully",
         data: user
-    });
-   
-   
+    });   
 });
-
