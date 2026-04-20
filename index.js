@@ -50,7 +50,7 @@ console.log("MONGO_URI:", process.env.MONGODB_CONNECTION_STRING);
 
 // CORS configuration
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://ultimate-store.netlify.app/'], // Add your frontend URLs
+    origin: ['http://localhost:5173', 'https://ultimate-store.netlify.app'], // Add your frontend URLs
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
