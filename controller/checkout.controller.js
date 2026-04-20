@@ -70,7 +70,7 @@ export const createCheckoutSession = async (req, res) => {
 
 // POST /api/v1/checkout/webhook  ← must use express.raw() in routes
 export const stripeWebhook = async (req, res) => {
-  const sig = req.headers["stripe-signature"]
+  const sig = req.headers["stripe-signature"];
   let event;
 
   try {
@@ -85,6 +85,19 @@ export const stripeWebhook = async (req, res) => {
       paymentStatus: "paid",
       stripePaymentIntentId: session.payment_intent,
     });
+  }
+
+  // Fallback: handle payment_intent.succeeded via order_reference in payment_details
+  if (event.type === "payment_intent.succeeded") {
+    const pi = event.data.object;
+    const sessionId = pi.payment_details?.order_reference;
+
+    if (sessionId) {
+      await Order.findOneAndUpdate(
+        { stripeSessionId: sessionId },
+        { paymentStatus: "paid", stripePaymentIntentId: pi.id }
+      );
+    }
   }
 
   if (event.type === "checkout.session.expired") {
