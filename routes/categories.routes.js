@@ -6,11 +6,11 @@ import { createCategory, deleteCategory, getAllCategories, updateCategory } from
 
 const router = express.Router();
 
-router.get("/", protect, adminOnly, getAllCategories);
-router.post("/", protect, productValidator, uploadSingle("image"), createCategory);
+router.get("/", getAllCategories);
+router.post("/", protect, productValidator, adminOnly, uploadSingle("image"), createCategory);
 
-router.patch("/:id", protect, productValidator, uploadSingle("image"), updateCategory);
-router.delete("/:id", protect, deleteCategory);
+router.patch("/:id", protect, adminOnly, productValidator, uploadSingle("image"), updateCategory);
+router.delete("/:id", protect, adminOnly, deleteCategory);
 
 
 

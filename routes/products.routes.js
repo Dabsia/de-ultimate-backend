@@ -7,11 +7,11 @@ import { uploadSingle } from "../middleware/imageUpload.js";
 const router = express.Router();
 
 router.get("/", getAllProducts);
-router.post("/", protect, productValidator, uploadSingle("image"), createProduct);
+router.post("/", protect, adminOnly, productValidator, uploadSingle("image"), createProduct);
 
 router.get("/:id", getProductById);
-router.patch("/:id", protect, productValidator, uploadSingle("image"), updateProduct);
-router.delete("/:id", protect, deleteProduct);
+router.patch("/:id", protect, adminOnly, productValidator, uploadSingle("image"), updateProduct);
+router.delete("/:id", protect, adminOnly, deleteProduct);
 
 
 
