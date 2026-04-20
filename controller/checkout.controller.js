@@ -70,7 +70,7 @@ export const createCheckoutSession = async (req, res) => {
 
 // POST /api/v1/checkout/webhook  ← must use express.raw() in routes
 export const stripeWebhook = async (req, res) => {
-  const sig = req.headers["stripe-signature"];
+  const sig = req.headers["stripe-signature"]
   let event;
 
   try {
