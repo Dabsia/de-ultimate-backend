@@ -52,7 +52,7 @@ console.log("MONGO_URI:", process.env.MONGODB_CONNECTION_STRING);
 app.use(cors({
     origin: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174'], // Add your frontend URLs
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
