@@ -107,8 +107,10 @@ import emailRoutes from './routes/email.routes.js'
 import paymentsRoutes from './routes/payments.routes.js'
 import checkoutRoutes from './routes/checkout.routes.js'
 import { stripeWebhook } from "./controller/checkout.controller.js";
+import { startOrderCleanup } from "./utils/cleanupPendingOrders.js";
 
 const app = express();
+startOrderCleanup();
 
 app.use(cors({
     origin: ['http://localhost:5173', 'https://ultimate-store.netlify.app'],
