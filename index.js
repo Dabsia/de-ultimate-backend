@@ -106,6 +106,7 @@ import categoriesRoutes from './routes/categories.routes.js'
 import emailRoutes from './routes/email.routes.js'
 import paymentsRoutes from './routes/payments.routes.js'
 import checkoutRoutes from './routes/checkout.routes.js'
+import orderRoutes from './routes/order.routes.js'
 import { stripeWebhook } from "./controller/checkout.controller.js";
 import { startOrderCleanup } from "./utils/cleanupPendingOrders.js";
 
@@ -134,6 +135,7 @@ app.use('/api/v1/category', categoriesRoutes);
 app.use('/api/v1/email', emailRoutes);
 app.use('/api/v1/checkout', checkoutRoutes);
 app.use('/api/v1/payments', paymentsRoutes);
+app.use('/api/v1/orders', orderRoutes)
 
 app.use((req, res) => {
     res.status(404).json({ message: 'Route not found' });
