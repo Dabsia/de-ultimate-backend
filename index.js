@@ -56,6 +56,9 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+// This allows the webhook to use express.raw() without interference
+app.use('/api/v1/checkout', checkoutRoutes);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -65,7 +68,7 @@ app.use("/api/v1/users", userRoutes);
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/category', categoriesRoutes)
 app.use('/api/v1/email', emailRoutes)
-app.use('/api/v1/checkout', checkoutRoutes)
+// app.use('/api/v1/checkout', checkoutRoutes)
 app.use('/api/v1/payments', paymentsRoutes)
 // app.use('/api/v1/montonio', montonioRoutes)
 
