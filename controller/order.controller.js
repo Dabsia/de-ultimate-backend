@@ -90,6 +90,7 @@
 // }
 
 import Order from '../model/Order.model.js'
+import User from '../model/User.model.js'
 
 // Get all orders — paid only for admin dashboard
 export const getOrders = async (req, res) => {
@@ -112,19 +113,29 @@ export const getOrderById = async (req, res) => {
     }
 }
 
-// Get all orders for a specific user — paid only
+// Get items by the user id
 export const getOrdersByUser = async (req, res) => {
     try {
-        const orders = await Order.find({ 
-            email: req.params.email,
+        const { userId } = req.params
+
+        // Find user's email first
+        const user = await User.findById(userId)
+        if (!user) return res.status(404).json({ message: "User not found" })
+
+        // Query by EITHER user ID or email — catches both old and new orders
+        const orders = await Order.find({
+            $or: [
+                { user: userId },
+                { email: user.email }
+            ],
             paymentStatus: "paid"
         }).sort({ createdAt: -1 })
+
         res.status(200).json(orders)
     } catch (error) {
         res.status(500).json({ message: 'Failed to fetch user orders', error: error.message })
     }
 }
-
 // Update order status (admin: mark as shipped, delivered, cancelled)
 export const updateOrderStatus = async (req, res) => {
     try {

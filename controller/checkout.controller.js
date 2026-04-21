@@ -1,5 +1,6 @@
 import Stripe from "stripe";
 import Order from "../model/Order.model.js";
+import { sendEmail } from "../services/email.js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -41,11 +42,19 @@ export const createCheckoutSession = async (req, res) => {
       postcode:       customer.postcode,
       city:           customer.city,
       additionalInfo: customer.additionalInfo || "",
+      user: req.user?._id || null,
       items:          orderItems,
       subtotal,
       shippingCost:   0,
       total,
       paymentStatus:  "pending",
+    });
+    sendEmail({
+      to: 'dabojohnson98@gmail.com',
+      name: name,
+      // from: from,
+      subject: 'Incoming Order',
+      html: `<h1>${name} just placed an order</h1>`
     });
 
     const session = await stripe.checkout.sessions.create({

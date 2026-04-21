@@ -1,24 +1,3 @@
-// import mongoose, { Schema } from "mongoose";
-
-// const orderSchema =  new Schema({
-//     products: [
-//         {
-//             productData: {type: Object, required: true},
-//             quantity :{type: Number, required: true}
-//         }
-//     ],
-//     user: {
-//         name: {type: String, required: true},
-//         userId: {
-//             type: Schema.Types.ObjectId,
-//             required: true,
-//             ref: 'User'
-//         }
-//     }
-// })
-
-// export const Order = mongoose.model('Order', orderSchema)
-
 import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema({
@@ -32,7 +11,7 @@ const orderSchema = new mongoose.Schema({
   postcode:  { type: String, required: true },
   city:      { type: String, required: true },
   additionalInfo: { type: String },
-
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   // Order Items
   items: [
     {
