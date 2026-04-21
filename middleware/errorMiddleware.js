@@ -1,5 +1,5 @@
 const errorHandler = (err, req, res, next) => {
-    console.error(err); // replace with logger later
+    
 
     if (err.name === 'CastError') {
         return res.status(400).json({

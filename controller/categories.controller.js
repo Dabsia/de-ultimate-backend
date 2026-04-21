@@ -4,7 +4,6 @@ import fs from "fs";
 
 // Create category with image
 export const createCategory = async (req, res) => {
-    // console.log(req.user)
   try {
     const { name, description} = req.body;
     
@@ -46,7 +45,7 @@ export const createCategory = async (req, res) => {
     });
     
   } catch (error) {
-    console.error("Error creating category:", error);
+   
     
     // Clean up file if it exists
     if (req.file && fs.existsSync(req.file.path)) {
@@ -73,7 +72,7 @@ export const getAllCategories = async (req, res) => {
     });
     
   } catch (error) {
-    console.error("Error fetching categories:", error);
+    
     return res.status(500).json({
       success: false,
       message: error.message || "Failed to fetch categories",
@@ -130,7 +129,7 @@ export const updateCategory = async (req, res) => {
     });
     
   } catch (error) {
-    console.error("Error updating category:", error);
+
     
     // Clean up file if it exists
     if (req.file && fs.existsSync(req.file.path)) {
@@ -169,7 +168,7 @@ export const deleteCategory = async (req, res) => {
     });
     
   } catch (error) {
-    console.error("Error deleting category:", error);
+    
     return res.status(500).json({
       success: false,
       message: error.message || "Failed to delete category",

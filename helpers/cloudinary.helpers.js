@@ -11,7 +11,7 @@ export const uploadImage = async (filePath, folder = "products") => {
       publicId: result.public_id 
     };
   } catch (error) {
-    console.error("Error uploading image to Cloudinary:", error);
+ 
     throw new Error("Failed to upload image");
   }
 };
@@ -22,7 +22,7 @@ export const deleteImage = async (publicId) => {
     await cloud.uploader.destroy(publicId);
     return true;
   } catch (error) {
-    console.error("Error deleting image from Cloudinary:", error);
+   
     throw new Error("Failed to delete image");
   }
 };

@@ -14,7 +14,5 @@ export const startOrderCleanup = () => {
       },
       { paymentStatus: "failed" }
     );
-
-    console.log(`Cleaned up ${result.modifiedCount} stale pending orders`);
   });
 };

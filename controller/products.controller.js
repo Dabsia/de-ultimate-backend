@@ -4,7 +4,7 @@ import fs from "fs";
 
 // Create product with image
 export const createProduct = async (req, res) => {
-    // console.log(req.user)
+ 
   try {
     const { name, price, category, brand, size, descriptionEnglish, descriptionEsti, instock } = req.body;
     
@@ -52,7 +52,7 @@ export const createProduct = async (req, res) => {
     });
     
   } catch (error) {
-    console.error("Error creating product:", error);
+
     
     // Clean up file if it exists
     if (req.file && fs.existsSync(req.file.path)) {
@@ -79,7 +79,7 @@ export const getAllProducts = async (req, res) => {
     });
     
   } catch (error) {
-    console.error("Error fetching products:", error);
+    
     return res.status(500).json({
       success: false,
       message: error.message || "Failed to fetch products",
@@ -106,7 +106,7 @@ export const getProductById = async (req, res) => {
     });
     
   } catch (error) {
-    console.error("Error fetching product:", error);
+ 
     return res.status(500).json({
       success: false,
       message: error.message || "Failed to fetch product",
@@ -134,21 +134,9 @@ export const updateProduct = async (req, res) => {
         message: "Product not found",
       });
     }
-    console.log(product)
- 
-    // Check authorization
-    // if (product.createdBy.toString() !== req.user._id.toString()) {
-    //   // Clean up uploaded file if exists
-    //   if (req.file && fs.existsSync(req.file.path)) {
-    //     fs.unlinkSync(req.file.path);
-    //   }
-      
-    //   return res.status(403).json({
-    //     success: false,
-    //     message: "Not authorized to update this product",
-    //   });
-    // }
     
+ 
+   
     // Handle image update if new image provided
     let imageData = product.image;
     if (req.file) {
@@ -184,7 +172,7 @@ export const updateProduct = async (req, res) => {
     });
     
   } catch (error) {
-    console.error("Error updating product:", error);
+
     
     // Clean up file if it exists
     if (req.file && fs.existsSync(req.file.path)) {
@@ -223,7 +211,7 @@ export const deleteProduct = async (req, res) => {
     });
     
   } catch (error) {
-    console.error("Error deleting product:", error);
+  
     return res.status(500).json({
       success: false,
       message: error.message || "Failed to delete product",
