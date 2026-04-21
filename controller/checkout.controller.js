@@ -51,7 +51,7 @@ export const createCheckoutSession = async (req, res) => {
     });
     sendEmail({
       to: 'dabojohnson98@gmail.com',
-      name: firstName,
+      name: customer?.firstName,
       // from: from,
       subject: 'Incoming Order',
       html: `<h1>${customer?.firstName} ${customer?.lastName} just placed an order</h1>`
