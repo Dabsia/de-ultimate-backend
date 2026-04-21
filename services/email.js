@@ -6,6 +6,7 @@ export const sendEmail = ({ to, subject, html, from, phoneNumber }) => {
     resend.emails.send({
       from: 'onboarding@resend.dev',
       to: to || 'dabojohnson98@gmail.com',
+      title: {subject},
       subject: subject,
       phoneNumber: phoneNumber,
       html: html

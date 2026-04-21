@@ -1,17 +1,17 @@
 import express from "express";  
 import cors from "cors";
 import errorHandler from "./middleware/errorMiddleware.js";
-
+import "./db/db.js";
 import productsRoutes from "./routes/products.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import authRoutes from './routes/auth.routes.js'
 import categoriesRoutes from './routes/categories.routes.js'
 import emailRoutes from './routes/email.routes.js'
-import paymentsRoutes from './routes/payments.routes.js'
 import checkoutRoutes from './routes/checkout.routes.js'
 import orderRoutes from './routes/order.routes.js'
 import { stripeWebhook } from "./controller/checkout.controller.js";
 import { startOrderCleanup } from "./utils/cleanupPendingOrders.js";
+
 
 const app = express();
 startOrderCleanup();
