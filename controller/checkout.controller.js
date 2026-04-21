@@ -64,16 +64,6 @@ export const createCheckoutSession = async (req, res) => {
     order.stripeSessionId = session.id;
     await order.save();
 
-    sendEmail({
-      to: 'dabojohnson98@gmail.com',
-      name: customer?.firstName,
-      // from: from,
-      subject: `${customer?.firstName} ${customer?.lastName} just placed an order`,
-      html: `<h1>New order Received</h1>
-        <a href='https://ultimate-store.netlify.app/admin'>Click link to check the order</a>
-      `
-    });
-
     res.status(200).json({ sessionId: session.id, url: session.url });
   } catch (error) {
    
