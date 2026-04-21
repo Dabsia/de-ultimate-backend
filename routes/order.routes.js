@@ -16,7 +16,7 @@ router.get('/', protect, adminOnly, getOrders)
 router.get("/stats", adminOnly, getOrderStats);
 router.get('/:id', protect, adminOnly, getOrderById)
 router.get('/user/:userId', protect, adminOnly, getOrdersByUser)
-router.put('/:id', protect, adminOnly, updateOrderStatus)
+router.patch('/:id', protect, adminOnly, updateOrderStatus)
 router.delete('/:id', protect, adminOnly, deleteOrder)
 
 export default router
