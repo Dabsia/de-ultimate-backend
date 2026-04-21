@@ -51,10 +51,10 @@ export const createCheckoutSession = async (req, res) => {
     });
     sendEmail({
       to: 'dabojohnson98@gmail.com',
-      name: name,
+      name: firstName,
       // from: from,
       subject: 'Incoming Order',
-      html: `<h1>${name} just placed an order</h1>`
+      html: `<h1>${firstName} ${lastName} just placed an order</h1>`
     });
 
     const session = await stripe.checkout.sessions.create({
