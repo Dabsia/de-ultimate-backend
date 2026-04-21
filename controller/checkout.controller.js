@@ -94,17 +94,32 @@ export const stripeWebhook = async (req, res) => {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
-    await Order.findByIdAndUpdate(session.metadata.orderId, {
-      paymentStatus: "paid",
-      stripePaymentIntentId: session.payment_intent,
-    });
+    const order = await Order.findByIdAndUpdate(
+      session.metadata.orderId,
+      { paymentStatus: "paid", stripePaymentIntentId: session.payment_intent },
+      { new: true }  // ← get the updated order back
+    );
+
+    // ✅ Send email only after payment is confirmed
+    if (order) {
+      sendEmail({
+        to: 'dabojohnson98@gmail.com',
+        subject: `${order.firstName} ${order.lastName} just placed an order`,
+        html: `
+          <h1>New Order Received</h1>
+          <p><strong>Customer:</strong> ${order.firstName} ${order.lastName}</p>
+          <p><strong>Email:</strong> ${order.email}</p>
+          <p><strong>Total:</strong> €${order.total}</p>
+          <p><strong>Items:</strong> ${order.items.map(i => `${i.name} x${i.quantity}`).join(', ')}</p>
+          <a href='https://ultimate-store.netlify.app/admin'>View order in admin</a>
+        `
+      });
+    }
   }
 
-  // Fallback: handle payment_intent.succeeded via order_reference in payment_details
   if (event.type === "payment_intent.succeeded") {
     const pi = event.data.object;
     const sessionId = pi.payment_details?.order_reference;
-
     if (sessionId) {
       await Order.findOneAndUpdate(
         { stripeSessionId: sessionId },
