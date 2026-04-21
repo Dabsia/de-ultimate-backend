@@ -54,7 +54,7 @@ export const createCheckoutSession = async (req, res) => {
       name: firstName,
       // from: from,
       subject: 'Incoming Order',
-      html: `<h1>${firstName} ${lastName} just placed an order</h1>`
+      html: `<h1>${customer?.firstName} ${customer?.lastName} just placed an order</h1>`
     });
 
     const session = await stripe.checkout.sessions.create({
