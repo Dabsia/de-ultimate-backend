@@ -98,12 +98,12 @@ export const resetPassword = (req, res) => {
             user.resetTokenExpiration = Date.now() +  3600000
             user.save()
         }).then(result => {
-            const link = `https://dabojohnson.netlify.app/reset/${token}`
+            const link = `https://ultimate-store.netlify.app/reset/${token}`
             sendEmail({
                 to: email,
-                subject: "Welcome to Ecommerce!",
+                subject: "Reset Password",
                 html: `<h1>You requested a password reset</h1>
-                    <a href = ${link} >Click this link to set a  password</a>
+                    <a href = ${link} >Click this link to set a password</a>
                 `
             });
             res.status(200).json({
