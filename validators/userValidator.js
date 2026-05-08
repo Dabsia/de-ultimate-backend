@@ -26,4 +26,4 @@ export const loginValidator = [
       .trim()
     //   .isAlphanumeric()
       .withMessage('Password must be at least 8 characters and has characters and text'),
-  ];
+  ]
