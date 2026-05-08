@@ -11,7 +11,7 @@ router.post("/", protect, adminOnly, productValidator, uploadSingle("image"), cr
 
 router.get("/:id", getProductById);
 router.patch("/:id", protect, adminOnly, productValidator, uploadSingle("image"), updateProduct);
-router.delete("/:id", protect, adminOnly, deleteProduct);
+router.delete("/:id", protect, adminOnly, deleteProduct)
 
 
 
