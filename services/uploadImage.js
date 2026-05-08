@@ -29,7 +29,7 @@ export class UploadService {
     }
   }
   
-  // Delete image from Cloudinary
+  // Delete image from Cloudinary 
   static async deleteImageFromCloud(publicId) {
     if (!publicId) return;
     await deleteImage(publicId);
