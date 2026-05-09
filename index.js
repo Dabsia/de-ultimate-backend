@@ -17,7 +17,7 @@ const app = express();
 startOrderCleanup();
 
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://ultimate-store.netlify.app'],
+    origin: ['http://localhost:5173', 'https://ultimate-store.netlify.app', 'https://daultimatestores.com'],
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
