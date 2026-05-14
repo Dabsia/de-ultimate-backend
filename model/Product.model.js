@@ -19,8 +19,14 @@ const productSchema = new mongoose.Schema({
           required: true,
         },
       },
-    brand: {
-      type: String
+   
+    sale_price: {
+      type: Number,
+ 
+    },
+    expiration_date: {
+      type: Date,
+      required: true
     },
     size: {
       type: String
@@ -31,7 +37,7 @@ const productSchema = new mongoose.Schema({
     },
     descriptionEsti: {
       type: String,
-      required: true
+      // required: true
     },
     instock: {
       type: Boolean,
