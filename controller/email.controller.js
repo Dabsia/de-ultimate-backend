@@ -5,7 +5,7 @@ export const sendEmailToAdmin = async (req, res) => {
     const { name, phoneNumber, subject, message, from } = req.body;
     const email = await Email.create({ name, phoneNumber, subject, message, from });
     sendEmail({
-        to: 'dabojohnson98@gmail.com',
+        to: 'daultimatestores@gmail.com',
         name: name,
         phoneNumber: phoneNumber,
         message: message,

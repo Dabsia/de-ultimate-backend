@@ -93,7 +93,7 @@ export const stripeWebhook = async (req, res) => {
     // ✅ Send email only after payment is confirmed
     if (order) {
       sendEmail({
-        to: 'dabojohnson98@gmail.com',
+        to: 'daultimatestores@gmail.com',
         subject: `${order.firstName} ${order.lastName} just placed an order`,
         html: `
           <h1>New Order Received</h1>
