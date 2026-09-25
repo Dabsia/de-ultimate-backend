@@ -23,7 +23,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// ⚠️ Webhook MUST be registered before express.json() — needs raw buffer
+// Webhook MUST be registered before express.json() — needs raw buffer
 app.post('/api/v1/checkout/webhook', express.raw({ type: 'application/json' }), stripeWebhook);
 
 // JSON parsing for all other routes
